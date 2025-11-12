@@ -394,7 +394,7 @@ Install below dependencies:
 
 ```bash
 sudo apt update && upgrade -y
-sudo apt install python3 python3-venv python3-pip python3-dev libpq-dev curl git gunicorn postgresql postgresql-contrib supervisor pgbouncer
+sudo apt install python3 python3-venv python3-pip python3-dev libpq-dev curl git gunicorn postgresql postgresql-contrib supervisor pgbouncer nginx
 python3 --version
 # Your should see python version 3.X.X
 pip3 --verison
@@ -557,6 +557,11 @@ sudo systemctl restart pgbouncer
 ```bash
 cd project
 source venv/bin/activate
+python3 manage.py makemigrations
+python3 manage.py migrate
+mkdir -p logs
+touch logs/gunicorn-access.log logs/gunicorn-error.log
+# Add you server ip address to ALLOWED_HOSTS
 gunicorn --bind 0.0.0.0:8000 project.wsgi
 ```
 
